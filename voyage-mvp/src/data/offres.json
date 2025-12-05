@@ -1,0 +1,281 @@
+[
+ 
+  {
+    "id": 1,
+    "titre": "Vol Dakar → Paris",
+    "description": "Vol direct avec compagnie Air Sénégal, confort premium et repas inclus.",
+    "destination": "Paris",
+    "dateDepart": "2025-12-15",
+    "dateRetour": "2025-12-25",
+    "categorie": "vol",
+    "prix": 450,
+    "image": "./public/assets/vol_paris.jpg"
+  },
+  {
+    "id": 2,
+    "titre": "Vol Dakar → Londres",
+    "description": "Vol avec escale, option flexible, repas inclus.",
+    "destination": "Londres",
+    "dateDepart": "2025-12-20",
+    "dateRetour": "2026-01-05",
+    "categorie": "vol",
+    "prix": 480,
+    "image": "/assets/vol_londres.jpg"
+  },
+  {
+    "id": 3,
+    "titre": "Vol Dakar → Istanbul",
+    "description": "Vol direct avec Turkish Airlines, siège confortable.",
+    "destination": "Istanbul",
+    "dateDepart": "2026-01-10",
+    "dateRetour": "2026-01-20",
+    "categorie": "vol",
+    "prix": 520,
+    "image": "/assets/vol_istanbul.jpg"
+  },
+  {
+    "id": 4,
+    "titre": "Vol Dakar → New York",
+    "description": "Vol long-courrier, divertissement à bord inclus.",
+    "destination": "New York",
+    "dateDepart": "2026-02-01",
+    "dateRetour": "2026-02-15",
+    "categorie": "vol",
+    "prix": 850,
+    "image": "/assets/vol_newyork.jpg"
+  },
+  {
+    "id": 5,
+    "titre": "Vol Dakar → Madrid",
+    "description": "Vol direct low-cost, option bagages en supplément.",
+    "destination": "Madrid",
+    "dateDepart": "2025-12-18",
+    "dateRetour": "2025-12-28",
+    "categorie": "vol",
+    "prix": 400,
+    "image": "/assets/vol_madrid.jpg"
+  },
+
+
+  {
+    "id": 11,
+    "titre": "Hôtel 5* Paris",
+    "description": "Suite luxueuse avec vue sur la Tour Eiffel, petit déjeuner inclus.",
+    "destination": "Paris",
+    "dateDepart": "2025-12-15",
+    "dateRetour": "2025-12-25",
+    "categorie": "hotel",
+    "prix": 350,
+    "image": "hotel_paris.jpg"
+  },
+  {
+    "id": 12,
+    "titre": "Hôtel 4* Londres",
+    "description": "Chambre moderne avec petit déjeuner buffet inclus.",
+    "destination": "Londres",
+    "dateDepart": "2025-12-20",
+    "dateRetour": "2026-01-05",
+    "categorie": "hotel",
+    "prix": 300,
+    "image": "hotel_londres.jpg"
+  },
+  {
+    "id": 13,
+    "titre": "Hôtel 3* Istanbul",
+    "description": "Hôtel économique avec piscine et wifi gratuit.",
+    "destination": "Istanbul",
+    "dateDepart": "2026-01-10",
+    "dateRetour": "2026-01-20",
+    "categorie": "hotel",
+    "prix": 180,
+    "image": "hotel_istanbul.jpg"
+  },
+  {
+    "id": 14,
+    "titre": "Hôtel 5* New York",
+    "description": "Suite luxe avec vue sur Manhattan, petit déjeuner inclus.",
+    "destination": "New York",
+    "dateDepart": "2026-02-01",
+    "dateRetour": "2026-02-15",
+    "categorie": "hotel",
+    "prix": 600,
+    "image": "hotel_newyork.jpg"
+  },
+  {
+    "id": 15,
+    "titre": "Hôtel 4* Madrid",
+    "description": "Chambre moderne avec balcon, wifi et petit déjeuner inclus.",
+    "destination": "Madrid",
+    "dateDepart": "2025-12-18",
+    "dateRetour": "2025-12-28",
+    "categorie": "hotel",
+    "prix": 280,
+    "image": "hotel_madrid.jpg"
+  },
+  {
+    "id": 16,
+    "titre": "Hôtel 3* Rome",
+    "description": "Hôtel économique proche du centre historique.",
+    "destination": "Rome",
+    "dateDepart": "2026-01-05",
+    "dateRetour": "2026-01-15",
+    "categorie": "hotel",
+    "prix": 200,
+    "image": "hotel_rome.jpg"
+  },
+  {
+    "id": 17,
+    "titre": "Hôtel 4* Lisbonne",
+    "description": "Chambre moderne, wifi et petit déjeuner inclus.",
+    "destination": "Lisbonne",
+    "dateDepart": "2026-01-12",
+    "dateRetour": "2026-01-20",
+    "categorie": "hotel",
+    "prix": 290,
+    "image": "hotel_lisbonne.jpg"
+  },
+  {
+    "id": 18,
+    "titre": "Hôtel 5* Dubaï",
+    "description": "Suite luxe avec piscine et plage privée.",
+    "destination": "Dubaï",
+    "dateDepart": "2026-02-05",
+    "dateRetour": "2026-02-20",
+    "categorie": "hotel",
+    "prix": 800,
+    "image": "hotel_dubai.jpg"
+  },
+  {
+    "id": 19,
+    "titre": "Hôtel 4* Tokyo",
+    "description": "Chambre moderne avec vue sur la ville, petit déjeuner inclus.",
+    "destination": "Tokyo",
+    "dateDepart": "2026-03-01",
+    "dateRetour": "2026-03-15",
+    "categorie": "hotel",
+    "prix": 400,
+    "image": "hotel_tokyo.jpg"
+  },
+  {
+    "id": 20,
+    "titre": "Hôtel 3* Barcelone",
+    "description": "Hôtel économique proche des plages et restaurants.",
+    "destination": "Barcelone",
+    "dateDepart": "2025-12-22",
+    "dateRetour": "2026-01-02",
+    "categorie": "hotel",
+    "prix": 220,
+    "image": "hotel_barcelone.jpg"
+  },
+
+  {
+    "id": 21,
+    "titre": "Séjour 5 nuits Marrakech",
+    "description": "Séjour hôtel 4*, visites et activités incluses.",
+    "destination": "Marrakech",
+    "dateDepart": "2026-01-10",
+    "dateRetour": "2026-01-15",
+    "categorie": "sejour",
+    "prix": 700,
+    "image": "sejour_marrakech.jpg"
+  },
+  {
+    "id": 22,
+    "titre": "Séjour 7 nuits Ibiza",
+    "description": "Séjour hôtel 4*, plage privée et activités incluses.",
+    "destination": "Ibiza",
+    "dateDepart": "2026-02-01",
+    "dateRetour": "2026-02-08",
+    "categorie": "sejour",
+    "prix": 950,
+    "image": "sejour_ibiza.jpg"
+  },
+  {
+    "id": 23,
+    "titre": "Séjour 5 nuits Santorin",
+    "description": "Séjour tout inclus avec coucher de soleil et piscine.",
+    "destination": "Santorin",
+    "dateDepart": "2026-03-05",
+    "dateRetour": "2026-03-10",
+    "categorie": "sejour",
+    "prix": 1200,
+    "image": "sejour_santorin.jpg"
+  },
+  {
+    "id": 24,
+    "titre": "Séjour 7 nuits Bali",
+    "description": "Séjour hôtel 5*, excursions et activités incluses.",
+    "destination": "Bali",
+    "dateDepart": "2026-04-01",
+    "dateRetour": "2026-04-08",
+    "categorie": "sejour",
+    "prix": 1500,
+    "image": "sejour_bali.jpg"
+  },
+  {
+    "id": 25,
+    "titre": "Séjour 5 nuits Dubai",
+    "description": "Séjour hôtel 5*, activités et plage privée incluses.",
+    "destination": "Dubaï",
+    "dateDepart": "2026-05-10",
+    "dateRetour": "2026-05-15",
+    "categorie": "sejour",
+    "prix": 1400,
+    "image": "sejour_dubai.jpg"
+  },
+  {
+    "id": 26,
+    "titre": "Séjour 7 nuits Maldives",
+    "description": "Séjour luxe tout inclus, bungalow sur l’eau.",
+    "destination": "Maldives",
+    "dateDepart": "2026-06-01",
+    "dateRetour": "2026-06-08",
+    "categorie": "sejour",
+    "prix": 2500,
+    "image": "sejour_maldives.jpg"
+  },
+  {
+    "id": 27,
+    "titre": "Séjour 5 nuits Zanzibar",
+    "description": "Séjour hôtel 4*, plage et activités incluses.",
+    "destination": "Zanzibar",
+    "dateDepart": "2026-07-05",
+    "dateRetour": "2026-07-10",
+    "categorie": "sejour",
+    "prix": 1100,
+    "image": "sejour_zanzibar.jpg"
+  },
+  {
+    "id": 28,
+    "titre": "Séjour 7 nuits Seychelles",
+    "description": "Séjour hôtel 5*, plage privée et excursions incluses.",
+    "destination": "Seychelles",
+    "dateDepart": "2026-08-01",
+    "dateRetour": "2026-08-08",
+    "categorie": "sejour",
+    "prix": 2200,
+    "image": "sejour_seychelles.jpg"
+  },
+  {
+    "id": 29,
+    "titre": "Séjour 5 nuits Lisbonne",
+    "description": "Séjour hôtel 4*, visites et activités incluses.",
+    "destination": "Lisbonne",
+    "dateDepart": "2026-09-01",
+    "dateRetour": "2026-09-06",
+    "categorie": "sejour",
+    "prix": 900,
+    "image": "sejour_lisbonne.jpg"
+  },
+  {
+    "id": 30,
+    "titre": "Séjour 7 nuits Barcelone",
+    "description": "Séjour hôtel 4*, visites et détente incluses.",
+    "destination": "Barcelone",
+    "dateDepart": "2026-10-01",
+    "dateRetour": "2026-10-08",
+    "categorie": "sejour",
+    "prix": 950,
+    "image": "sejour_barcelone.jpg"
+  }
+]

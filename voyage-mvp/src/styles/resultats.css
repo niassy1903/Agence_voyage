@@ -1,0 +1,50 @@
+/* Filtres */
+.filtres-container {
+  background: white;
+  padding: 1.5rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+  margin-bottom: 2rem;
+}
+
+.filtres-container .form-control {
+  height: 45px;
+}
+
+/* Grille des résultats */
+.resultats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Carte des résultats */
+.resultat-card {
+  transition: var(--transition);
+}
+
+.resultat-card:hover {
+  box-shadow: var(--shadow-lg);
+}
+
+/* Badge de promotion */
+.promo-badge {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  background: var(--secondary-color);
+  color: white;
+  padding: 0.3rem 0.8rem;
+  border-radius: 20px;
+  font-size: 0.8rem;
+  font-weight: 600;
+}
+
+/* Message "Aucun résultat" */
+.aucun-resultat {
+  text-align: center;
+  padding: 3rem;
+  background: white;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-sm);
+}

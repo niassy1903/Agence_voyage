@@ -1,0 +1,34 @@
+/* Tableau des offres */
+.admin-table {
+  background: white;
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+}
+
+.admin-table th {
+  background: var(--dark-color);
+  color: white;
+  font-weight: 600;
+}
+
+/* Boutons d'action */
+.action-btn {
+  margin-right: 0.5rem;
+  padding: 0.3rem 0.6rem;
+  font-size: 0.8rem;
+}
+
+/* Modal d'édition */
+.admin-modal .modal-content {
+  padding: 1.5rem;
+}
+
+.admin-modal .form-control {
+  margin-bottom: 1rem;
+}
+
+/* Bouton d'ajout */
+.ajout-btn {
+  margin-bottom: 1.5rem;
+}

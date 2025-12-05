@@ -1,0 +1,50 @@
+/* Conteneur du formulaire */
+.recherche-container {
+  max-width: 800px;
+  margin: 0 auto;
+  background: white;
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow-md);
+}
+
+.recherche-container h2 {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: var(--dark-color);
+}
+
+/* Champs du formulaire */
+.recherche-form .form-group {
+  margin-bottom: 1.5rem;
+}
+
+.recherche-form .form-control {
+  height: 50px;
+  font-size: 1rem;
+}
+
+.recherche-form .form-select {
+  height: 50px;
+  font-size: 1rem;
+}
+
+/* Bouton de soumission */
+.recherche-form .btn {
+  height: 50px;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+/* Animation du bouton WhatsApp */
+.whatsapp-btn {
+  background: #25d366;
+  color: white;
+  border: none;
+  transition: var(--transition);
+}
+
+.whatsapp-btn:hover {
+  background: #128c7e;
+  transform: scale(1.02);
+}
