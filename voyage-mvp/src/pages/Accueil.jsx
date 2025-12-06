@@ -8,56 +8,91 @@ import "../styles/accueil.css";
 export default function Accueil() {
   const [offres, setOffres] = useState([]);
   const [categorie, setCategorie] = useState("toutes");
+  const [destinationRecherche, setDestinationRecherche] = useState("");
+  const [budgetMax, setBudgetMax] = useState("");
+  const [dateDepart, setDateDepart] = useState("");
+  const [dateRetour, setDateRetour] = useState("");
   const [resultats, setResultats] = useState([]);
   const [page, setPage] = useState(1);
   const itemsPerPage = 6;
 
-  // Charger les offres
-  useEffect(() => {
+ useEffect(() => {
+  const storedData = localStorage.getItem("agenceVoyageData");
+  if (storedData) {
+    const data = JSON.parse(storedData);
+    setOffres(data.offres || []);
+    setResultats(data.offres || []);
+  } else {
+    const initialData = {
+      offres: offresData,
+      demandes: []
+    };
     setOffres(offresData);
     setResultats(offresData);
-  }, []);
+    localStorage.setItem("agenceVoyageData", JSON.stringify(initialData));
+  }
+}, []);
 
-  // Filtrer par catégorie
-  const handleCategorie = useCallback(
-    (cat) => {
-      setCategorie(cat);
-      setPage(1);
-      if (cat === "toutes") {
-        setResultats(offres);
-      } else {
-        setResultats(offres.filter((o) => o.categorie === cat));
-      }
-    },
-    [offres]
-  );
 
-  // Lien WhatsApp
+  const appliquerFiltres = useCallback(() => {
+    setPage(1);
+    let filtres = [...offres];
+
+    if (categorie !== "toutes") {
+      filtres = filtres.filter((o) => o.categorie === categorie);
+    }
+
+    if (destinationRecherche) {
+      filtres = filtres.filter((o) =>
+        o.destination.toLowerCase().includes(destinationRecherche.toLowerCase())
+      );
+    }
+
+    if (budgetMax) {
+      filtres = filtres.filter((o) => o.prix <= parseInt(budgetMax));
+    }
+
+    if (dateDepart) {
+      filtres = filtres.filter((o) => o.dateDepart === dateDepart);
+    }
+
+    if (dateRetour) {
+      filtres = filtres.filter((o) => o.dateRetour === dateRetour);
+    }
+
+    filtres.sort((a, b) => a.prix - b.prix);
+    setResultats(filtres);
+  }, [offres, categorie, destinationRecherche, budgetMax, dateDepart, dateRetour]);
+
+  useEffect(() => {
+    appliquerFiltres();
+  }, [appliquerFiltres]);
+
+  const handleCategorie = (cat) => {
+    setCategorie(cat);
+  };
+
+  const handleRecherche = (e) => {
+    e.preventDefault();
+    appliquerFiltres();
+  };
+
   const handleWhatsApp = useCallback((offre) => {
-    const message = genererMessageWhatsApp(offre);
-    const lien = `https://wa.me/221761885485?text=${encodeURIComponent(
-      message
-    )}`;
-    window.open(lien, "_blank");
-  }, []);
+  const message = genererMessageWhatsApp(offre);
+  const lien = message; // La fonction retourne déjà l'URL complète
+  window.open(lien, "_blank");
+}, []);
 
-  // Pagination
+
   const handleVoirPlus = useCallback(() => {
     setPage((prev) => prev + 1);
   }, []);
 
-  // Offres à afficher
   const offresAAfficher = resultats.slice(0, page * itemsPerPage);
-
-  // Gestion recherche (placeholder)
-  const handleRecherche = (e) => {
-    e.preventDefault();
-    alert("Fonctionnalité de recherche avancée à implémenter !");
-  };
+  const offresPromo = offres.filter((offre) => offre.promotion);
 
   return (
     <Container className="text-center py-5">
-      {/* Section Hero */}
       <h1 className="display-4 fw-bold mb-3 text-primary">
         Bienvenue chez <span className="text-warning">AgenceVoyage</span>
       </h1>
@@ -65,45 +100,47 @@ export default function Accueil() {
         Billets d’avion, hôtels, séjours et assistance voyage. Tout en un clic !
       </p>
 
-      {/* Barre de recherche */}
-      <Form
-        onSubmit={handleRecherche}
-        className="row g-3 justify-content-center mb-5 bg-light p-4 rounded shadow-sm"
-      >
+      {/* Barre de recherche avant les offres spéciales */}
+      <Form onSubmit={handleRecherche} className="row g-3 justify-content-center mb-5 bg-light p-4 rounded shadow-sm">
         <Col md={3}>
           <Form.Control
             type="text"
             className="shadow-sm border-primary"
             placeholder="Destination (ex: Dakar, Paris)"
+            value={destinationRecherche}
+            onChange={(e) => setDestinationRecherche(e.target.value)}
           />
         </Col>
         <Col md={2}>
           <Form.Control
             type="date"
             className="shadow-sm border-primary"
-            placeholder="Date de départ"
+            value={dateDepart}
+            onChange={(e) => setDateDepart(e.target.value)}
+            min={new Date().toISOString().split("T")[0]}
           />
         </Col>
         <Col md={2}>
           <Form.Control
             type="date"
             className="shadow-sm border-primary"
-            placeholder="Date de retour"
+            value={dateRetour}
+            onChange={(e) => setDateRetour(e.target.value)}
+            min={dateDepart || new Date().toISOString().split("T")[0]}
           />
         </Col>
         <Col md={2}>
-          <Form.Select className="shadow-sm border-primary">
-            <option value="vol">Vol</option>
-            <option value="hotel">Hôtel</option>
-            <option value="sejour">Séjour</option>
-          </Form.Select>
+          <Form.Control
+            type="number"
+            className="shadow-sm border-primary"
+            placeholder="Budget max (FCFA)"
+            value={budgetMax}
+            onChange={(e) => setBudgetMax(e.target.value)}
+            min="0"
+          />
         </Col>
         <Col md={2}>
-          <Button
-            type="submit"
-            variant="primary"
-            className="w-100 shadow-sm fw-bold"
-          >
+          <Button type="submit" variant="primary" className="w-100 shadow-sm fw-bold">
             <i className="bi bi-search me-2"></i> Rechercher
           </Button>
         </Col>
@@ -134,7 +171,28 @@ export default function Accueil() {
         ))}
       </div>
 
-      {/* Offres */}
+      {/* Section Offres Spéciales */}
+      {offresPromo.length > 0 && (
+        <>
+          <h2 className="mb-4 text-start">
+            <i className="bi bi-tag-fill me-2 text-danger"></i>
+            Nos Offres Spéciales
+          </h2>
+          <Row className="g-4 mb-5">
+            {offresPromo.map((offre) => (
+              <Col key={offre.id} md={4} className="d-flex">
+                <CarteOffre
+                  offre={offre}
+                  onClickWhatsApp={() => handleWhatsApp(offre)}
+                  isPromo={true}
+                />
+              </Col>
+            ))}
+          </Row>
+        </>
+      )}
+
+      {/* Affichage des offres */}
       <Row className="g-4">
         {offresAAfficher.length > 0 ? (
           offresAAfficher.map((offre) => (
@@ -142,6 +200,7 @@ export default function Accueil() {
               <CarteOffre
                 offre={offre}
                 onClickWhatsApp={() => handleWhatsApp(offre)}
+                isPromo={offre.promotion}
               />
             </Col>
           ))
@@ -149,13 +208,13 @@ export default function Accueil() {
           <Col xs={12}>
             <Alert variant="warning" className="text-center py-4">
               <i className="bi bi-exclamation-triangle-fill fs-3 mb-3"></i>
-              <p className="mb-0">Aucune offre disponible pour cette catégorie.</p>
+              <p className="mb-0">Aucune offre disponible pour cette recherche.</p>
             </Alert>
           </Col>
         )}
       </Row>
 
-      {/* Voir plus */}
+      {/* Bouton "Voir plus" */}
       {resultats.length > offresAAfficher.length && (
         <div className="text-center mt-5">
           <Button

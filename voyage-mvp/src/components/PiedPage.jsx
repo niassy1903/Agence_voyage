@@ -1,5 +1,6 @@
 import React from "react";
 import { Container, Row, Col } from "react-bootstrap";
+import { Link } from "react-router-dom";
 
 const PiedPage = () => {
   return (
@@ -17,9 +18,15 @@ const PiedPage = () => {
           <Col md={3} className="text-center">
             <h5 className="mb-3">Liens utiles</h5>
             <ul className="list-unstyled">
-              <li><a href="/" className="text-white text-decoration-none">Accueil</a></li>
-              <li><a href="/recherche" className="text-white text-decoration-none">Recherche</a></li>
-              <li><a href="/admin" className="text-white text-decoration-none">Admin</a></li>
+              <li>
+                <Link to="/" className="text-white text-decoration-none">Accueil</Link>
+              </li>
+              <li>
+                <Link to="/recherche" className="text-white text-decoration-none">Recherche</Link>
+              </li>
+              <li>
+                <Link to="/administration" className="text-white text-decoration-none">Admin</Link>
+              </li>
             </ul>
           </Col>
           <Col md={3} className="text-center text-md-end">

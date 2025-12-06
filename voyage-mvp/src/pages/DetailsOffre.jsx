@@ -2,8 +2,7 @@ import React, { useState, useEffect, useCallback } from "react";
 import { Container, Row, Col, Card, Button, Badge, Alert } from "react-bootstrap";
 import { useParams, useNavigate } from "react-router-dom";
 import { genererMessageWhatsApp } from "../utils/genererMessageWhatsApp";
-import offresData from "../data/offres.json";
-import "bootstrap/dist/css/bootstrap.min.css";
+import Swal from "sweetalert2";
 import "../styles/details.css";
 
 const DetailsOffre = () => {
@@ -13,22 +12,97 @@ const DetailsOffre = () => {
   const [chargement, setChargement] = useState(true);
 
   useEffect(() => {
-    const offreTrouvee = offresData.find((o) => o.id === parseInt(id));
-    setOffre(offreTrouvee);
+    const storedData = localStorage.getItem("agenceVoyageData");
+    if (storedData) {
+      const data = JSON.parse(storedData);
+      const offreTrouvee = data.offres.find((o) => o.id === parseInt(id));
+      setOffre(offreTrouvee);
+    } else {
+      const offreTrouvee = offresData.find((o) => o.id === parseInt(id));
+      setOffre(offreTrouvee);
+    }
     setChargement(false);
   }, [id]);
 
   const handleReserver = useCallback(() => {
     if (!offre) return;
-    const whatsappURL = genererMessageWhatsApp(
-      offre.destination,
-      offre.dateDepart,
-      offre.dateRetour,
-      1,
-      offre.prix,
-      offre.categorie
-    );
-    window.open(whatsappURL, "_blank");
+    const message = genererMessageWhatsApp(offre);
+    window.open(message, "_blank");
+  }, [offre]);
+
+  const handleContact = useCallback(() => {
+    if (!offre) return;
+
+    Swal.fire({
+      title: 'Nous contacter pour cette offre',
+      html: `
+        <form id="contactForm" class="swal2-form">
+          <div class="mb-3">
+            <label for="swal-name" class="form-label">Nom complet</label>
+            <input type="text" id="swal-name" class="swal2-input form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="swal-phone" class="form-label">Téléphone (WhatsApp)</label>
+            <input type="tel" id="swal-phone" class="swal2-input form-control" required>
+          </div>
+          <div class="mb-3">
+            <label for="swal-email" class="form-label">Email (optionnel)</label>
+            <input type="email" id="swal-email" class="swal2-input form-control">
+          </div>
+        </form>
+      `,
+      focusConfirm: false,
+      showCancelButton: true,
+      confirmButtonText: 'Envoyer',
+      cancelButtonText: 'Annuler',
+      preConfirm: () => {
+        const name = document.getElementById('swal-name').value;
+        const phone = document.getElementById('swal-phone').value;
+        const email = document.getElementById('swal-email').value;
+
+        if (!name || !phone) {
+          Swal.showValidationMessage('Veuillez remplir les champs obligatoires');
+          return false;
+        }
+
+        // Enregistrer la demande avec les coordonnées
+        const storedData = JSON.parse(localStorage.getItem("agenceVoyageData")) || { offres: [], demandes: [] };
+
+        const nouvelleDemande = {
+          id: Date.now(),
+          client: name,
+          telephone: phone,
+          email: email,
+          destination: offre.destination,
+          dateDepart: offre.dateDepart,
+          dateRetour: offre.dateRetour,
+          voyageurs: 1,
+          budget: offre.prix * 1000, // Convertir en FCFA
+          categorie: offre.categorie,
+          statut: "en attente",
+          dateDemande: new Date().toISOString().split('T')[0],
+          offreId: offre.id,
+          offreTitre: offre.titre
+        };
+
+        const updatedData = {
+          ...storedData,
+          demandes: [...storedData.demandes, nouvelleDemande]
+        };
+
+        localStorage.setItem("agenceVoyageData", JSON.stringify(updatedData));
+
+        return true;
+      }
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire(
+          'Demande envoyée!',
+          'Nous vous contacterons bientôt pour finaliser votre réservation.',
+          'success'
+        );
+      }
+    });
   }, [offre]);
 
   if (chargement) {
@@ -85,14 +159,25 @@ const DetailsOffre = () => {
                 <strong>Prix :</strong> {offre.prix.toLocaleString()} FCFA<br />
                 {offre.places && <><strong>Places disponibles :</strong> {offre.places}</>}
               </Card.Text>
-              <Button
-                variant="success"
-                size="lg"
-                className="w-100 mt-3"
-                onClick={handleReserver}
-              >
-                Réserver via WhatsApp
-              </Button>
+
+              <div className="d-flex gap-2 mt-4">
+                <Button
+                  variant="success"
+                  size="lg"
+                  className="w-100"
+                  onClick={handleReserver}
+                >
+                  <i className="bi bi-whatsapp me-2"></i> Réserver via WhatsApp
+                </Button>
+                <Button
+                  variant="primary"
+                  size="lg"
+                  className="w-100"
+                  onClick={handleContact}
+                >
+                  <i className="bi bi-person-fill me-2"></i> Nous contacter
+                </Button>
+              </div>
             </Card.Body>
           </Card>
         </Col>

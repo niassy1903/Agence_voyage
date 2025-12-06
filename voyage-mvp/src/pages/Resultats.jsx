@@ -1,10 +1,9 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { Container, Row, Col, Alert } from "react-bootstrap";
 import { useLocation, useNavigate } from "react-router-dom";
 import CarteOffre from "../components/CarteOffre";
 import { genererMessageWhatsApp } from "../utils/genererMessageWhatsApp";
 import offresData from "../data/offres.json";
-import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/resultats.css";
 
 const Resultats = () => {
@@ -14,42 +13,53 @@ const Resultats = () => {
   const [chargement, setChargement] = useState(true);
 
   useEffect(() => {
+    const storedOffres = localStorage.getItem("offres");
+    const offres = storedOffres ? JSON.parse(storedOffres) : offresData;
+
     if (state?.recherche) {
       const { destination, dateDepart, dateRetour, voyageurs, categorie, budget } = state.recherche;
-      const offresFiltrees = offresData.filter((offre) => {
-        return (
-          (categorie === "toutes" || offre.categorie === categorie) &&
-          (destination === "" || offre.destination.toLowerCase().includes(destination.toLowerCase())) &&
-          (dateDepart === "" || offre.dateDepart === dateDepart) &&
-          (budget === "" || offre.prix <= parseInt(budget))
+
+      let offresFiltrees = [...offres];
+
+      if (categorie !== "toutes") {
+        offresFiltrees = offresFiltrees.filter((offre) => offre.categorie === categorie);
+      }
+
+      if (destination) {
+        offresFiltrees = offresFiltrees.filter((offre) =>
+          offre.destination.toLowerCase().includes(destination.toLowerCase())
         );
-      });
+      }
+
+      if (dateDepart) {
+        offresFiltrees = offresFiltrees.filter((offre) => offre.dateDepart === dateDepart);
+      }
+
+      if (dateRetour) {
+        offresFiltrees = offresFiltrees.filter((offre) => offre.dateRetour === dateRetour);
+      }
+
+      if (budget) {
+        offresFiltrees = offresFiltrees.filter((offre) => offre.prix <= parseInt(budget));
+      }
+
+      offresFiltrees.sort((a, b) => a.prix - b.prix);
       setResultats(offresFiltrees);
     } else {
-      setResultats(offresData);
+      setResultats(offres);
     }
     setChargement(false);
   }, [state]);
 
-  const handleDetails = useCallback(
-    (id) => navigate(`/offre/${id}`),
-    [navigate]
-  );
+  const handleDetails = (id) => {
+    navigate(`/offre/${id}`);
+  };
 
-  const handleWhatsApp = useCallback(
-    (offre) => {
-      const lien = genererMessageWhatsApp(
-        offre.destination,
-        offre.dateDepart,
-        offre.dateRetour,
-        1,
-        offre.prix,
-        offre.categorie
-      );
-      window.open(lien, "_blank");
-    },
-    []
-  );
+  const handleWhatsApp = (offre) => {
+    const message = genererMessageWhatsApp(offre);
+    const lien = `https://wa.me/221761885485?text=${encodeURIComponent(message)}`;
+    window.open(lien, "_blank");
+  };
 
   if (chargement) {
     return (
@@ -76,6 +86,7 @@ const Resultats = () => {
                 offre={offre}
                 onClickDetails={() => handleDetails(offre.id)}
                 onClickWhatsApp={() => handleWhatsApp(offre)}
+                isPromo={offre.promotion}
               />
             </Col>
           ))}
